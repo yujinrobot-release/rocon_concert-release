@@ -1,0 +1,12 @@
+Source: ros-groovy-concert-conductor
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>, Jihoon Lee <jihoonl@rnd.yujinrobot.com>
+Build-Depends: debhelper (>= 7.0.50~), ros-groovy-catkin
+Homepage: http://ros.org/wiki/concert_conductor
+Standards-Version: 3.9.2
+
+Package: ros-groovy-concert-conductor
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-groovy-rospy,ros-groovy-rocon-app-manager-msgs,ros-groovy-concert-msgs,ros-groovy-std-msgs,ros-groovy-gateway-msgs
+Description: Managing the concert clients - invitations, monitoring connections...
