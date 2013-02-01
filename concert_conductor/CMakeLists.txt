@@ -3,7 +3,7 @@
 ##############################################################################
 
 cmake_minimum_required(VERSION 2.8.3)
-project(rocon_orchestra)
+project(concert_conductor)
 
 ##############################################################################
 # Catkin
@@ -20,10 +20,9 @@ catkin_python_setup()
 
 install(
     PROGRAMS 
-        scripts/impl_to_dot
-        scripts/orchestra.py
+        scripts/conductor.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
     )
 
-install(DIRECTORY resources
+install(DIRECTORY param
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+#
+# License: BSD
+#   https://raw.github.com/robotics-in-concert/rocon_concert/master/rocon_orchestra/LICENSE
+#
 
-import implementation
-import orchestration
+from .orchestration import Orchestration
