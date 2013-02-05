@@ -1,0 +1,12 @@
+Source: ros-groovy-rocon-orchestra
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>, Jihoon Lee <jihoonlee.in@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), ros-groovy-catkin
+Homepage: http://ros.org/wiki/rocon_orchestra
+Standards-Version: 3.9.2
+
+Package: ros-groovy-rocon-orchestra
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-groovy-roslib,ros-groovy-concert-msgs,ros-groovy-rospy,python-pydot,graphviz
+Description: Orchestrating the concert - linking, connections, remappings, resource handling.
