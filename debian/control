@@ -1,0 +1,12 @@
+Source: ros-groovy-concert-master
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>, Jihoon Lee <jihoonlee.in@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), ros-groovy-catkin
+Homepage: http://ros.org/wiki/concert_master
+Standards-Version: 3.9.2
+
+Package: ros-groovy-concert-master
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-groovy-rocon-gateway,ros-groovy-rocon-hub,ros-groovy-rocon-hub-client,ros-groovy-rospy,ros-groovy-concert-msgs
+Description: The ros master at the heard of the concert subsystem along with a few utility functions.
