@@ -1,0 +1,12 @@
+Source: ros-groovy-rocon-tf-reconstructor
+Section: misc
+Priority: extra
+Maintainer: jihoonl <jihoonl@todo.todo>
+Build-Depends: debhelper (>= 7.0.50~), ros-groovy-catkin, ros-groovy-concert-msgs, ros-groovy-geometry-msgs, ros-groovy-roscpp, ros-groovy-tf
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-groovy-rocon-tf-reconstructor
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-groovy-concert-msgs, ros-groovy-geometry-msgs, ros-groovy-roscpp, ros-groovy-tf
+Description: The rocon_tf_reconstructor package
