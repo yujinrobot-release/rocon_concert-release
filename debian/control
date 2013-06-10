@@ -1,0 +1,12 @@
+Source: ros-hydro-concert-conductor
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>, Jihoon Lee <jihoonlee.in@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), ros-hydro-catkin
+Homepage: http://ros.org/wiki/concert_conductor
+Standards-Version: 3.9.2
+
+Package: ros-hydro-concert-conductor
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-hydro-concert-msgs, ros-hydro-gateway-msgs, ros-hydro-rocon-app-manager-msgs, ros-hydro-rocon-utilities, ros-hydro-rospy, ros-hydro-std-msgs
+Description: Managing the concert clients - invitations, monitoring connections...
