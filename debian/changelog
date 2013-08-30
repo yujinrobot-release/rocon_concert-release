@@ -1,0 +1,78 @@
+ros-hydro-concert-orchestra (0.5.5-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 29 Aug 2013 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.5.4-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 18 Jul 2013 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.5.3-0raring) raring; urgency=high
+
+  * adding log to notify solution stopped properly
+  * logic bugfix when stopping apps after a solution is invalidated.
+  * better solution compatibility tree debugging.
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Tue, 16 Jul 2013 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.5.2-0raring) raring; urgency=high
+
+  * 0.5.1
+  * 0.5.0
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 09 Jun 2013 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.5.1-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 27 May 2013 02:46:00 -0000
+
+ros-hydro-concert-orchestra (0.5.0-0raring) raring; urgency=high
+
+  * catkin isn't processing whole test dirs, so for now, explicitly
+    tell it which tests to run (until I can figure out why)
+  * is compatible platform tuples with stars.
+  * fix no error message when trying to start an already started solution.
+  * update for non-gateway clients.
+  * better verbosity and bugfix the branch selection for least visible leaf.
+  * dynamically adding and removing a client tested (marginally).
+  * dynamically adding new clients.
+  * stop solution working again.
+  * auto-starting chatter concert with the new configuration, but will fail if everything doesn't gather at once.
+  * breaking out node into its own class.
+  * scrapping last idea, moving to a pruning algorithm.
+  * tempoary commit
+  * starting to play around with dynamic client handling.
+  * rocon_orchestra -> concert_orchestra
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 27 May 2013 01:48:00 -0000
+
+ros-hydro-concert-orchestra (0.3.0-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 04 Feb 2013 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.2.0-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 31 Jan 2013 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.1.1-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Tue, 11 Dec 2012 15:00:00 -0000
+
+ros-hydro-concert-orchestra (0.1.0-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 01 Apr 2012 15:00:00 -0000
+
+
