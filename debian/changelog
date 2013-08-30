@@ -1,0 +1,101 @@
+ros-hydro-concert-conductor (0.5.5-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 29 Aug 2013 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.5.4-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 18 Jul 2013 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.5.3-0raring) raring; urgency=high
+
+  * No params dir to install
+  * auto_invite is configurable with argument
+  * bugfix renamed app list variable from pairing merge.
+  * bugfix some holes in the human friendly naming, make sure we go back and plug missing holes.
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Tue, 16 Jul 2013 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.5.2-0raring) raring; urgency=high
+
+  * 0.5.1
+  * install launch directory in conductor
+  * 0.5.0
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 09 Jun 2013 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.5.1-0raring) raring; urgency=high
+
+  * install launch directory in conductor
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 27 May 2013 02:46:00 -0000
+
+ros-hydro-concert-conductor (0.5.0-0raring) raring; urgency=high
+
+  * update for non-gateway clients.
+  * concert master launchers moved to conductor.
+  * local concert name fixes.
+  * trivial debugging comments
+  * concert conductor send invite with local name
+  * handle uuid's by using a human consumable name, also remove the leading slash that was in the human readable names before.
+  * 0.4.0
+  * gateway info now a msg.
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 27 May 2013 01:48:00 -0000
+
+ros-hydro-concert-conductor (0.3.0-0raring) raring; urgency=high
+
+  * Merge branch 'groovy-devel' of https://github.com/robotics-in-concert/rocon_concert into groovy-devel
+  * updating jihoon e-mail
+  * taking the concert client out of the loop
+  * scanning for clients on the gateways.
+  * concert status -> app manager status, part of first redesign.
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 04 Feb 2013 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.2.0-0raring) raring; urgency=high
+
+  * pulling list apps, also correcting advertising behaviour in the client.
+  * cleaning, don't use unnecessary params.
+  * fleshed put platform info retrieval.
+  * platform info to rocon_app_manager_msgs
+  * rocon_orchestration->rocon_concert
+  * refactoring app->rapp.
+  * catkinization fixes, but still not yet working.
+  * catkinized.
+  * no more solution handling.
+  * started adding a stop, but aborted for now. also bugfixed in place with
+    a wait for service.
+  * start solution, also pass on remappings.
+  * orchestration plugged in.
+  * reinstituted app list in concert client information.
+  * Don't latch yet till rosbridge fixes itself.
+  * less spammy concert client list updates.
+  * safely check platform info services.
+  * publishing concert client information.
+  * rewire conductor to send the concert name in the invitation, lost when auto-invite service was cancelled.
+  * revert to old topic name.
+  * minor fixes.
+  * minor fixes.
+  * handle bad clients.
+  * update licenses.
+  * importing from rocon_app_platform.
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 31 Jan 2013 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.1.1-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Tue, 11 Dec 2012 15:00:00 -0000
+
+ros-hydro-concert-conductor (0.1.0-0raring) raring; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 01 Apr 2012 15:00:00 -0000
+
+
