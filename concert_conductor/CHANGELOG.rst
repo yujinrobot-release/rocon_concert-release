@@ -1,79 +1,101 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package concert_conductor
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=========
+Changelog
+=========
 
-0.5.5 (2013-08-30)
+0.6.0 (2014-08-25)
 ------------------
-
-0.5.4 (2013-07-19)
-------------------
+* documentation for the concert conductor.
+* use proper lists for hubs/concerts now roslaunch can handle it.
+* need the invite handle so we can uninvite it later, this was a regresion
+  and this fixes `#230 <https://github.com/robotics-in-concert/rocon_concert/issues/230>`_.
+* need the invite handle so we can uninvite it later, this was a regresion
+  and this fixes `#230 <https://github.com/robotics-in-concert/rocon_concert/issues/230>`_.
+* update publisher queue_size to avoid warning in indigo.
+* pass ip info along in concert client publishing.
+* remove debugging print.
+* bifurcating shell/gui processing for concert_conductor_graph
+* bugfix accidentally cancelled publisher pulls with the service pulls, `#222 <https://github.com/robotics-in-concert/rocon_concert/issues/222>`_
+* remove unused conductor process pulls once they're done with, `#222 <https://github.com/robotics-in-concert/rocon_concert/issues/222>`_
+* unregister the gateway info subscriber after we've finished with it.
+* sphinx docs for concert conductor
+* wireless handling and not using gone clients to generate concert aliases.
+* small documentation on how the state machine works.
+* Updated Idle->Available to reflect state name refactoring and relevant
+  comments.
+  Dummy transition handler for wireless dropouts.
+* ConcertClientException no longer useed.
+* eliminate redundant rapp_status and use uri's properly.
+* bugfixes to reenable chatter concert.
+* client status/gateway-info update handling and alot of minor fixes.
+* concert client publishers reintegrated in for the new conductor
+* don't go hunting for the gateway, configure it instead.
+* concert transitions now working for conductor v2.
+* relax timeouts on advertised concert client pulled services, fixes `#217 <https://github.com/robotics-in-concert/rocon_concert/issues/217>`_
+* rapp_handler -> rocon_scheduler_requests
+* a convenience rapp handler class for external users.
+* expose invited clients only once their handles have been flipped across.
+* interactions moved to rocon_tools, also updates for the rocon_utilities breakup.
+* explanatory comment about the application namespace.
+* make specific an exception message
+* catch a shutdown exception.
+* check rocon version of concert clients by conductor.
+* updates for the new rocon uri
+* platform tuple overhaul.
+* update for recently moved modules to rocon_tools, also platform_tuples refactoring.
+* remove unused variable.
+* remove unused variable.
+* cancel pulls when a client leaves, fixes `#169 <https://github.com/robotics-in-concert/rocon_concert/issues/169>`_ and ignore hash names, not friendly names, fixes `#170 <https://github.com/robotics-in-concert/rocon_concert/issues/170>`_.
+* cancel_pulls -> _cancel_pulls, fixes `#165 <https://github.com/robotics-in-concert/rocon_concert/issues/165>`_
+* better checking for local clients.
+* bugfix service connection errors and delays from rogue clients in the conductor.
+* republish uninvited clients, closes `#144 <https://github.com/robotics-in-concert/rocon_concert/issues/144>`_
+* accept remote gateways with ip 'localhost' as local clients.
+* working towards the compatibility tree scheduler.
+* disambiguate concert client update topics
+* expose connection statistics. closes `#35 <https://github.com/robotics-in-concert/rocon_concert/issues/35>`_
+* only publish invited concert clients.
+* handle corner case when uninviting disappearing clients.
+* better handling and logging of failed invitations in various scenarios.
+* only try to uninvite already invited clients.
+* conductor cleanup.
+* invite local clients only (good for testing), closes `#108 <https://github.com/robotics-in-concert/rocon_concert/issues/108>`_
+* remove legacy web app client handling from the conductor, closes `#127 <https://github.com/robotics-in-concert/rocon_concert/issues/127>`_.
+* catch a ros shutdown exception in the conductor spin.
+* bugfix Invite->BatchInvite.
+* external shutdown hooks for gateway and hub.
+* added shutdown hook for the conductor, but it's not yet fully operational.
+* bugfix a used variable before definition.
+* service exception handler when inviting.
+* quietly ignore invitation failures from local snobs.
+* fix unhandled service exception when ros shutsdown.
+* deprecate the old platform info message.
+* refactoring for a concert master launcher and fix old legacy tutorials.
+* scheduler
+* parallel service working. some changes in conductor. conductor returns always false for lock now
+* use wallsleeps to avoid simulation problems, closes `#46 <https://github.com/robotics-in-concert/rocon_concert/issues/46>`_.
+* simple role manager launcher that publishes the concert icon, closes `#38 <https://github.com/robotics-in-concert/rocon_concert/issues/38>`_.
+* concert_roles stub package.
+* Contributors: Daniel Stonier, Jihoon Lee, piyushk
 
 0.5.3 (2013-07-17)
 ------------------
-* No params dir to install
 * auto_invite is configurable with argument
-* bugfix renamed app list variable from pairing merge.
-* bugfix some holes in the human friendly naming, make sure we go back and plug missing holes.
-
-0.5.2 (2013-06-10)
-------------------
-* 0.5.1
-* install launch directory in conductor
-* 0.5.0
-
-0.5.1 (2013-05-27 11:46)
-------------------------
-* install launch directory in conductor
+* bugfix some holes in the human friendly naming
 
 0.5.0 (2013-05-27 10:48)
 ------------------------
-* update for non-gateway clients.
-* concert master launchers moved to conductor.
-* local concert name fixes.
-* trivial debugging comments
-* concert conductor send invite with local name
-* handle uuid's by using a human consumable name, also remove the leading slash that was in the human readable names before.
-* 0.4.0
-* gateway info now a msg.
+* include management of non-gateway clients (human clients).
+* use human consumable aliases inside the concert instead of uuids directly.
 
 0.3.0 (2013-02-05)
 ------------------
-* Merge branch 'groovy-devel' of https://github.com/robotics-in-concert/rocon_concert into groovy-devel
-* updating jihoon e-mail
-* taking the concert client out of the loop
-* scanning for clients on the gateways.
-* concert status -> app manager status, part of first redesign.
+* better scanning for clients on the gateways.
 
 0.2.0 (2013-02-01)
 ------------------
-* pulling list apps, also correcting advertising behaviour in the client.
-* cleaning, don't use unnecessary params.
-* fleshed put platform info retrieval.
-* platform info to rocon_app_manager_msgs
-* rocon_orchestration->rocon_concert
-* refactoring app->rapp.
-* catkinization fixes, but still not yet working.
-* catkinized.
-* no more solution handling.
-* started adding a stop, but aborted for now. also bugfixed in place with
-  a wait for service.
-* start solution, also pass on remappings.
-* orchestration plugged in.
-* reinstituted app list in concert client information.
-* Don't latch yet till rosbridge fixes itself.
-* less spammy concert client list updates.
-* safely check platform info services.
-* publishing concert client information.
-* rewire conductor to send the concert name in the invitation, lost when auto-invite service was cancelled.
-* revert to old topic name.
-* minor fixes.
-* minor fixes.
-* handle bad clients.
-* update licenses.
-* importing from rocon_app_platform.
-
-0.1.1 (2012-12-12)
-------------------
+* upgrade to use the rocon gateways instead of complicated handshaking over xmlrpc/zeroconf
 
 0.1.0 (2012-04-02)
 ------------------
+* provide handles to the orchestration module for triggering start of a solution.
+* interact over zeroconf and xmlrpc with rocon app managers.

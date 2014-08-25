@@ -1,191 +1,290 @@
 #!/usr/bin/env python
 #
 # License: BSD
-#   https://raw.github.com/robotics-in-concert/rocon_concert/concert_conductor/LICENSE
+#   https://raw.github.com/robotics-in-concert/rocon_concert/license/LICENSE
 #
+"""
+.. module:: concert_client
+
+This module wraps the concert_msgs data structure for a concert client in a
+python class for convenient handling inside the concert conductor node.
+"""
+
 ##############################################################################
 # Imports
 ##############################################################################
 
-import rospy
-import rocon_app_manager_msgs.msg as rapp_manager_msgs
-import rocon_app_manager_msgs.srv as rapp_manager_srvs
+import copy
+import threading
+
 import concert_msgs.msg as concert_msgs
-import gateway_msgs.msg as gateway_msgs
-import gateway_msgs.srv as gateway_srvs
+import rocon_app_manager_msgs.msg as rapp_manager_msgs
+import rocon_console.console as console
+import rocon_uri
+import rospy
+
+from .exceptions import InvalidTransitionException
+from . import transitions
 
 ##############################################################################
-# Exceptions
-##############################################################################
-
-
-class ConcertClientException(Exception):
-    """Exception class for concert client related errors"""
-    pass
-
-##############################################################################
-# ClientInfo Class
+# Client Class
 ##############################################################################
 
 
 class ConcertClient(object):
+    """
+    Envelops the concert client msg data structure that is published
+    to the rest of the concert with a few extra fields and methods useful
+    for management by the concert conductor class.
 
-    def __init__(self, client_name, gateway_name, is_local_client=False):
+    .. seealso:: :class:`.ConcertConductor`, :class:`.ConcertClients`
+    """
+    __slots__ = [
+        'msg',                 # concert_msgs.ConcertClient
+        '_cached_status_msg',  # rocon_app_manager_msgs.Status, details of the last status update from the client
+        'gateway_info',        # gateway_msgs.RemoteGateway
+        '_timestamps',         # last observed and last state change timestamps
+        '_transition_handlers',
+        '_lock',               # for protecting access to the msg variable
+    ]
+
+    State = concert_msgs.ConcertClientState
+
+    ##############################################################################
+    # Construction and Destruction
+    ##############################################################################
+
+    def __init__(self, gateway_info, concert_alias, is_local_client=False):
         '''
           Initialise, finally ending with a call on the service to the client's
           platform info service.
 
-          @param client_name : a string (+ index) human consumable form of the name
-          @type str
-          @param gateway_name : the name with 16 byte hash attached
-          @type str
-          @param is_local_client : differentiates an interactive local client from a gateway client
-          @type bool
-
-          @raise ConcertClientException : when platform info service is unavailable
+          :param gateway_msgs.RemoteGateway gateway_info: information from this client's remote gateway
+          :param str concert_alias: a string (+ index) human consumable form of the name
+          :param bool is_local_client: is on the same ip as the concert (if we care)
         '''
+        self.msg = concert_msgs.ConcertClient()
+        """The publishable data structure describing a concert client."""
+        self.msg.name = concert_alias
+        self.msg.gateway_name = gateway_info.name
+        self.msg.state = ConcertClient.State.PENDING
+        self.msg.ip = gateway_info.ip
+        self.msg.is_local_client = is_local_client
+        self.gateway_info = gateway_info
+        """Information about this client's gateway used for flipping, pulling and collecting connectivity statistics."""
+        # This will get assigned when a msg comes in and set back to none once it is processed.
+        # We only ever do processing on self.msg in one place to avoid threading problems
+        # (the transition handlers) so that is why we store a cached copy here.
+        self._cached_status_msg = None
+        self._lock = threading.Lock()
 
-        self.data = concert_msgs.ConcertClient()
-        self.gateway_name = gateway_name  # this is the rather unsightly name + hash key
-        self.name = client_name  # usually name (+ index), a more human consumable name
+        # timestamps
+        self._timestamps = {}
+        self._timestamps['last_seen'] = rospy.get_rostime()
+        self._timestamps['last_state_change'] = rospy.get_rostime()
 
-        self.platform_info = None
-        self.service_execution = {}  # Services to execute, e.g. start_app, stop_app
-        self._is_local_client = is_local_client  # As opposed to a gateway client
-        if not self._is_local_client:
-            self._pull_concert_client()  # get concert client info and pull required handles in
-            # could maybe catch an exception on error here
-        self._init()
-        self._setup_service_proxies()
+        # status
+        rospy.Subscriber('/' + self.gateway_name + '/' + 'status', rapp_manager_msgs.Status, self._ros_status_cb)
 
-        try:
-            self._update()
-        except ConcertClientException:
-            raise
+    ##############################################################################
+    # Conveniences
+    ##############################################################################
 
-    def _pull_concert_client(self):
+    @property
+    def concert_alias(self):
+        """The human readable concert alias for this client."""
+        return self.msg.name
+
+    @concert_alias.setter
+    def concert_alias(self, value):
+        self.msg.name = value
+
+    @property
+    def gateway_name(self):
+        """The concert client's name on the gateway network (typically has postfixed uuid)"""
+        return self.msg.gateway_name
+
+    @gateway_name.setter
+    def gateway_name(self, value):
+        self.msg.gateway_name = value
+
+    @property
+    def is_local_client(self):
+        """Whether it is a local client or not"""
+        return self.msg.is_local_client
+
+    @is_local_client.setter
+    def is_local_client(self, value):
+        self.msg.is_local_client = value
+
+    @property
+    def state(self):
+        """The concert client's state (e.g. BUSY, AVAILABLE, MISSING, ...)"""
+        return self.msg.state
+
+    @state.setter
+    def state(self, value):
+        self.msg.state = value
+
+    @property
+    def platform_info(self):
+        """Platform information about this concert client (icon, rocon uri, ...)"""
+        return self.msg.platform_info
+
+    @platform_info.setter
+    def platform_info(self, value):
+        self.msg.platform_info = value
+
+    ##############################################################################
+    # Timestamping
+    ##############################################################################
+
+    def touch(self):
+        """
+        The timestamp is updated whenever this concert client is visible on the gateway network.
+        This is the api that updates the timestamp.
+        """
+        self._timestamps['last_seen'] = rospy.get_rostime()
+
+    def time_since_last_seen(self):
+        """
+        :returns: the time since the client was last observed on the gateway network
+        :rtype: float
+        """
+        current_time = rospy.get_rostime()
+        difference = current_time - self._timestamps['last_seen']
+        return difference.to_sec()
+
+    def time_since_last_state_change(self):
+        """
+        This is useful to trigger some timeouts on state changes from a higher level.
+
+        :returns: the time since the client last changed state
+        :rtype: float
+        """
+        current_time = rospy.get_rostime()
+        difference = current_time - self._timestamps['last_state_change']
+        return difference.to_sec()
+
+    ##############################################################################
+    # Updating
+    ##############################################################################
+
+    def transition(self, new_state):
         '''
-          Pulls platform information from the advertised platform_info on another
-          ros system. It is just a one-shot only used at construction time.
+        Check that the transition is valid and then trigger the appropriate
+        handle for making the transition.
 
-          It pulls platform_info and list_apps information.
-
-          It also pulls the required handles in for further manipulation ('status' and 'invite')
+        :param str new_state:
+        :returns: function handler for the transition (varying args)
+        :raises: :exc:`.InvalidTransitionException` if the transition is not permitted
         '''
-        rospy.loginfo("Conductor: retrieving client information [%s]" % self.name)
-        pull_service = rospy.ServiceProxy('~pull', gateway_srvs.Remote)
-        req = gateway_srvs.RemoteRequest()
-        req.cancel = False
-        req.remotes = []
-        for service_name in ['platform_info', 'list_apps', 'status', 'invite']:
-            rule = gateway_msgs.Rule()
-            rule.name = str('/' + self.gateway_name + '/' + service_name)
-            rule.node = ''
-            rule.type = gateway_msgs.ConnectionType.SERVICE
-            req.remotes.append(gateway_msgs.RemoteRule(self.gateway_name.lstrip('/'), rule))
-        resp = pull_service(req)
-        if resp.result != 0:
-            rospy.logwarn("Conductor: failed to pull the platform info service from the client.")
-            return None
-
-    def _init(self):
-        # Platform_info
-        platform_info_service = rospy.ServiceProxy(str('/' + self.gateway_name + '/' + 'platform_info'), rapp_manager_srvs.GetPlatformInfo)
-        list_app_service = rospy.ServiceProxy(str('/' + self.gateway_name + '/' + 'list_apps'), rapp_manager_srvs.GetAppList)
-        # These are permanent
-        self._status_service = rospy.ServiceProxy('/' + str(self.gateway_name + '/' + 'status'), rapp_manager_srvs.Status)
-        self._invite_service = rospy.ServiceProxy('/' + str(self.gateway_name + '/' + 'invite'), rapp_manager_srvs.Invite)
-        try:
-            platform_info_service.wait_for_service()
-            list_app_service.wait_for_service()
-            self._status_service.wait_for_service()
-            self._invite_service.wait_for_service()
-        except rospy.ServiceException, e:
-            raise e
-        platform_info = platform_info_service().platform_info
-        self.data.name = platform_info.name
-        self.data.platform = platform_info.platform
-        self.data.system = platform_info.system
-        self.data.robot = platform_info.robot
-        # List Apps
-        try:
-            list_app_service.wait_for_service()
-        except rospy.ServiceException, e:
-            raise e
-        self.data.apps = list_app_service().available_apps
-
-    def to_msg_format(self):
-        '''
-          Returns the updated client information status in ros-consumable msg format.
-
-          @return the client information as a ros message.
-          @rtype concert_msgs.ConcertClient
-
-          @raise rospy.service.ServiceException : when assumed service link is unavailable
-        '''
-        try:
-            self._update()
-        except ConcertClientException:
-            raise
-        return self.data
-
-    def _update(self):
-        '''
-          Adds the current client status to the platform_info, list_apps information already
-          retrieved from the client and puts them in a convenient msg format,
-          ready for exposing outside the conductor (where? I can't remember).
-
-          @raise rospy.service.ServiceException : when assumed service link is unavailable
-        '''
-        try:
-            status = self._status_service(rapp_manager_srvs.StatusRequest())
-        except rospy.service.ServiceException:
-            raise ConcertClientException("client platform information services unavailable (disconnected?)")
-        self.data.name = self.name  # use the human friendly name
-        self.data.gateway_name = self.gateway_name
-        #self.data.name = status.namespace
-        self.data.last_connection_timestamp = rospy.Time.now()
-        if status.remote_controller == rapp_manager_msgs.Constants.NO_REMOTE_CONNECTION:
-            self.data.client_status = concert_msgs.Constants.CONCERT_CLIENT_STATUS_AVAILABLE
-        # Todo - fix this
-        #elif status.remote_controller == _this_concert_name:
-        #    self.data.client_status = concert_msgs.Constants.CONCERT_CLIENT_STATUS_CONNECTED
+        old_state = self.state
+        if (old_state, new_state) in transitions.StateTransitionTable.keys():
+            rospy.loginfo("Conductor : concert client transition [%s->%s][%s]" % (old_state, new_state, self.concert_alias))
+            self._timestamps['last_state_change'] = rospy.get_rostime()
+            self.state = new_state
+            transition_handler = transitions.StateTransitionTable[(old_state, new_state)](self)
+            return transition_handler.__call__
         else:
-            self.data.client_status = concert_msgs.Constants.CONCERT_CLIENT_STATUS_CONNECTED
-        #    self.data.client_status = concert_msgs.Constants.CONCERT_CLIENT_STATUS_UNAVAILABLE
+            rospy.logerr("Conductor : invalid concert client transition [%s->%s][%s]" % (self.state, new_state, self.concert_alias))
+            raise InvalidTransitionException("invalid concert client transition [%s->%s][%s]" % (old_state, new_state, self.concert_alias))
 
-    def invite(self, concert_gateway_name, client_local_name, ok_flag):
+    def update(self, remote_gateway_info):
+        """
+        Common updates for clients that have been observed on the gateway network.
+
+        This handles updates from both the incoming gateway information (remote_gateway_info)
+        as well as the cached rapp manager information (self._cached_status_msg). Updates primarily
+        go into the concert client message data (self.msg).
+
+        :param gateway_msgs.RemoteGateway remote_gateway_info: latest message providing up to date connectivity information about this concert client.
+        :returns: success or failure of the update
+        :rtype: bool
+        """
+        self.touch()
+        # remember, don't flag connection stats as worthy of a change.
+        self.msg.conn_stats = remote_gateway_info.conn_stats
+        #self.msg.last_connection_timestamp = rospy.Time.now()  # do we really need this?
+
+        # don't update every client, just the ones that we need information from
+        important_state = (self.state == ConcertClient.State.AVAILABLE) or (self.state == ConcertClient.State.UNINVITED) or (self.state == ConcertClient.State.MISSING)
+        if self._cached_status_msg is not None and important_state:
+            with self._lock:
+                status_msg = copy.deepcopy(self._cached_status_msg)
+                self._cached_status_msg = None
+            # uri update
+            uri = rocon_uri.parse(self.msg.platform_info.uri)
+            uri.rapp = status_msg.rapp.name if status_msg.rapp_status == rapp_manager_msgs.Status.RAPP_RUNNING else ''
+            self.msg.platform_info.uri = str(uri)
+            return True  # something changed
+        return False
+
+    ##############################################################################
+    # Utility
+    ##############################################################################
+
+    @staticmethod
+    def complete_list_of_states():
+        """
+        Gets the list of all possible states that a concert client may be in.
+
+        :returns: list of states from concert_msgs/ConcertClientState
+        :rtype: str[]
+        """
+        # funny way of getting all the states that are defined in ConcertClientState.msg
+        return concert_msgs.ConductorGraph.__slots__
+
+    ##############################################################################
+    # Printing
+    ##############################################################################
+
+    def __str__(self):
         '''
-          Bit messy with ok_flag here as we are mid-transition to using 'cancel' flag in the
-          invite services.
-
-          @param concert_gateway_name : have to let the client know the concert gateway name
-                                        so they can flip us topics...
-          @type str
+          Format the client into a human-readable string.
         '''
-        req = rapp_manager_srvs.InviteRequest(concert_gateway_name, client_local_name, not ok_flag)
-        resp = self._invite_service(req)
+        s = ''
+        s += console.green + "  %s" % self.msg.name + console.reset + '\n'
+        s += console.cyan + "    Gateway Name" + console.reset + " : " + console.yellow + "%s" % self.msg.name + console.reset + '\n'  # noqa
+        s += console.cyan + "    Is Local" + console.reset + "     : " + console.yellow + "%s" % self.msg.is_local_client + console.reset + '\n'  # noqa
+        s += console.cyan + "    State" + console.reset + "        : " + console.yellow + "%s" % self.state.capitalize() + console.reset + '\n'  # noqa
+        if self.state != ConcertClient.State.PENDING and self.state != ConcertClient.State.BAD:
+            s += console.cyan + "    Rocon Uri" + console.reset + "    : " + console.yellow + "%s" % self.msg.platform_info.uri + console.reset + '\n'  # noqa
+        return s
 
-        if resp.result == True:
-            self._setup_service_proxies()
-        else:
-            raise Exception(str("Invitation Failed : " + self.name))
-
-    def start_app(self, app_name, remappings):
+    @staticmethod
+    def msg2string(msg, indent="", show_state=True):
         '''
-          @param app_name : string unique identifier for the app
-          @type string
-          @param remappings : list of (from,to) pairs
-          @type list of tuples
-        '''
-        self._start_app_service.wait_for_service()
-        req = rapp_manager_srvs.StartAppRequest()
-        req.name = app_name
-        req.remappings = []
-        for remapping in remappings:
-            req.remappings.append(rapp_manager_msgs.Remapping(remapping[0], remapping[1]))
-        unused_resp = self._start_app_service(req)
+          Format the client into a human-readable string.
 
-    def _setup_service_proxies(self):
-        self._start_app_service = rospy.ServiceProxy(str(self.name + '/start_app'), rapp_manager_srvs.StartApp)
-        self._stop_app_service = rospy.ServiceProxy(str(self.name + '/stop_app'), rapp_manager_srvs.StopApp)
+          :param concert_msgs.ConcertClient msg: concert client information
+          :param str indent: prefix each line with this string (usually for indentation so is just a number of spaces)
+          :param bool show_state: include formatting of the client's state (increases verbosity).
+
+          :returns: the formatted string representation of the object
+          :rtype: str
+        '''
+        s = ''
+        s += indent + "-" + console.cyan + " Concert Alias" + console.reset + ": " + console.green + "%s" % msg.name + console.reset + '\n'  # noqa
+        s += indent + console.cyan + "  Gateway Name" + console.reset + " : " + console.yellow + "%s" % msg.gateway_name + console.reset + '\n'  # noqa
+        s += indent + console.cyan + "  Is Local" + console.reset + "     : " + console.yellow + "%s" % msg.is_local_client + console.reset + '\n'  # noqa
+        if show_state:
+            s += indent + console.cyan + "  State" + console.reset + "        : " + console.yellow + "%s" % msg.state.capitalize() + console.reset + '\n'  # noqa
+        if msg.state != ConcertClient.State.PENDING and msg.state != ConcertClient.State.BAD:
+            s += console.cyan + indent + "  Rocon Uri" + console.reset + "    : " + console.yellow + "%s" % msg.platform_info.uri + console.reset + '\n'  # noqa
+        return s
+
+    ##############################################################################
+    # Ros Callbacks
+    ##############################################################################
+
+    def _ros_status_cb(self, msg):
+        """
+        Update the concert client msg data with fields from this updated status.
+        Just store it, ready to be processed in the update() method by the
+        conductor spin loop (via the transition handlers)
+
+        :param rocon_app_manager_msgs.Status msg:
+        """
+        with self._lock:
+            self._cached_status_msg = msg
