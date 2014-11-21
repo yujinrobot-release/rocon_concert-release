@@ -2,7 +2,12 @@
 Changelog
 =========
 
-0.5.6 (2014-08-25)
+0.6.1 (2014-11-21)
+------------------
+* [rocon_concert] permit esoteric names once more.
+* Contributors: Daniel Stonier
+
+0.6.0 (2014-08-25)
 ------------------
 * parameter enabled link graph
 * concert_schedulers sphinxed.
