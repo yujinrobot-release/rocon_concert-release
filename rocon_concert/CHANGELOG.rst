@@ -2,7 +2,10 @@
 Changelog for package rocon_concert
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.5.6 (2014-08-25)
+0.6.1 (2014-11-21)
+------------------
+
+0.6.0 (2014-08-25)
 ------------------
 * interactions moved to rocon_tools, also updates for the rocon_utilities breakup.
 * concert_service_roslaunch -> concert_service_link_graph.
