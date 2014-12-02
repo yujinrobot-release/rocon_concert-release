@@ -2,6 +2,9 @@
 Changelog
 =========
 
+0.6.2 (2014-12-02)
+------------------
+
 0.6.1 (2014-11-21)
 ------------------
 * [rocon_concert] permit esoteric names once more.
