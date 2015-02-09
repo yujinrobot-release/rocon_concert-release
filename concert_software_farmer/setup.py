@@ -4,10 +4,8 @@ from distutils.core import setup
 from catkin_pkg.python_setup import generate_distutils_setup
 
 d = generate_distutils_setup(
-    packages=['concert_utilities', 'concert_utilities.conductor_graph'],
-    package_dir={'':'src'},
-    requires=['rospy'
-             ]
+    packages=['concert_software_farmer'],
+    package_dir={'': 'src'}
 )
 
 setup(**d)
