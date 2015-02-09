@@ -2,6 +2,11 @@
 Changelog for package concert_utilities
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.4 (2015-02-09)
+------------------
+* conductor graph string publisher for web. and conductor graph dotcode generator code has been migrated
+* Contributors: Jihoon Lee
+
 0.6.3 (2015-01-05)
 ------------------
 
