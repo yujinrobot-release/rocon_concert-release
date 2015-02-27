@@ -2,6 +2,9 @@
 Changelog for package concert_software_farmer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.5 (2015-02-27)
+------------------
+
 0.6.4 (2015-02-09)
 ------------------
 * add package version software farmer
