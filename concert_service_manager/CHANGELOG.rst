@@ -2,6 +2,9 @@
 Changelog for package concert_service_manager
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.6 (2015-03-23)
+------------------
+
 0.6.5 (2015-02-27)
 ------------------
 * add exception as param value
