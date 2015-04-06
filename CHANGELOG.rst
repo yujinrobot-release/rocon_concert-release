@@ -2,6 +2,9 @@
 Changelog for package concert_utilities
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.7 (2015-04-06)
+------------------
+
 0.6.6 (2015-03-23)
 ------------------
 * [rocon_concert] remove debugging prints.
