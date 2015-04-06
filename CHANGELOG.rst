@@ -2,6 +2,12 @@
 Changelog for package concert_service_manager
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.7 (2015-04-06)
+------------------
+* updates
+* update doc for concert_service manager
+* Contributors: Jihoon Lee
+
 0.6.6 (2015-03-23)
 ------------------
 
