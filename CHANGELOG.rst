@@ -2,6 +2,9 @@
 Changelog
 =========
 
+0.6.8 (2015-04-27)
+------------------
+
 0.6.7 (2015-04-06)
 ------------------
 * add sleep for spining closes `#278 <https://github.com/robotics-in-concert/rocon_concert/issues/278>`_
