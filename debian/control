@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-master
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), python-catkin-pkg, ros-indigo-catkin
+Homepage: http://ros.org/wiki/concert_master
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-master
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-concert-conductor, ros-indigo-concert-msgs, ros-indigo-concert-schedulers, ros-indigo-concert-service-manager, ros-indigo-concert-software-farmer, ros-indigo-rocon-console, ros-indigo-rocon-gateway, ros-indigo-rocon-hub, ros-indigo-rocon-icons, ros-indigo-rocon-interactions, ros-indigo-rocon-master-info, ros-indigo-rocon-python-comms, ros-indigo-rocon-python-utils, ros-indigo-rocon-std-msgs, ros-indigo-rosbridge-server, ros-indigo-rospy, ros-indigo-zeroconf-avahi
+Description: General concert functionality.
