@@ -1,0 +1,162 @@
+ros-indigo-concert-service-utilities (0.6.9-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Wed, 08 Jul 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.8-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 26 Apr 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.7-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 05 Apr 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.6-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 22 Mar 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.5-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 26 Feb 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.4-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 08 Feb 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.3-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 04 Jan 2015 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.2-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 01 Dec 2014 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.1-0trusty) trusty; urgency=high
+
+  * typo fix
+  * resource pimp working
+  * Contributors: Jihoon Lee
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 20 Nov 2014 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.6.0-0trusty) trusty; urgency=high
+
+  * Install update
+  * Removed Unneccessary .launch file
+  * Added launch file
+  * Modifications for Qt Plugin and readability
+  * usable configuration for service priorities.
+  * automagically finding the scheduler requests topic.
+  * middle of service configuration update.
+  * bugfix name for concert services, resource -> resource_name
+  * Merge branch 'hydro-devel' into parameter_overriding
+  * concert service uses resource instead of dispaly name
+  * now depending on rocon_icons for its own icons.
+  * interactions moved to rocon_tools, also updates for the rocon_utilities breakup.
+  * it tries to find service info rosservice for 5 times. If it does not find, make an error and exit
+  * typo
+  * add concert_service_info script
+  * concert_service_info first draft
+  * concert_roles -> rocon_interactions
+  * update to use jack's requester.
+  * service info retriever in python, #80 <https://github.com/robotics-in-concert/rocon_concert/issues/80>
+  * Contributors: Daniel Stonier, Jihoon Lee, kentsommer
+  * Install update
+  * Removed Unneccessary .launch file
+  * Added launch file
+  * Modifications for Qt Plugin and readability
+  * usable configuration for service priorities.
+  * automagically finding the scheduler requests topic.
+  * middle of service configuration update.
+  * bugfix name for concert services, resource -> resource_name
+  * Merge branch 'hydro-devel' into parameter_overriding
+  * concert service uses resource instead of dispaly name
+  * now depending on rocon_icons for its own icons.
+  * interactions moved to rocon_tools, also updates for the rocon_utilities breakup.
+  * it tries to find service info rosservice for 5 times. If it does not find, make an error and exit
+  * typo
+  * add concert_service_info script
+  * concert_service_info first draft
+  * concert_roles -> rocon_interactions
+  * update to use jack's requester.
+  * service info retriever in python, #80 <https://github.com/robotics-in-concert/rocon_concert/issues/80>
+  * Contributors: Daniel Stonier, Jihoon Lee, kentsommer
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 24 Aug 2014 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.5.5-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 29 Aug 2013 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.5.4-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 18 Jul 2013 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.5.3-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Tue, 16 Jul 2013 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.5.2-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 09 Jun 2013 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.5.1-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 27 May 2013 02:46:00 -0000
+
+ros-indigo-concert-service-utilities (0.5.0-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 27 May 2013 01:48:00 -0000
+
+ros-indigo-concert-service-utilities (0.3.0-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Mon, 04 Feb 2013 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.2.0-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Thu, 31 Jan 2013 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.1.1-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Tue, 11 Dec 2012 15:00:00 -0000
+
+ros-indigo-concert-service-utilities (0.1.0-0trusty) trusty; urgency=high
+
+
+
+ -- Daniel Stonier <d.stonier@gmail.com>  Sun, 01 Apr 2012 15:00:00 -0000
+
+
