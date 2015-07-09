@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-service-manager
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin
+Homepage: http://www.ros.org/wiki/concert_service_manager
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-service-manager
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-concert-msgs, ros-indigo-genpy, ros-indigo-rocon-console, ros-indigo-rocon-interactions, ros-indigo-rocon-python-utils, ros-indigo-roslaunch, ros-indigo-rospy, ros-indigo-std-msgs, ros-indigo-unique-id
+Description: Component responsible for launching and managing concert services.
