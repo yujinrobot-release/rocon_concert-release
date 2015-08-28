@@ -1,0 +1,12 @@
+Source: ros-indigo-rocon-concert
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin
+Homepage: http://www.ros.org/wiki/rocon_concert
+Standards-Version: 3.9.2
+
+Package: ros-indigo-rocon-concert
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-concert-conductor, ros-indigo-concert-master, ros-indigo-concert-schedulers, ros-indigo-concert-service-link-graph, ros-indigo-concert-service-manager, ros-indigo-concert-service-utilities, ros-indigo-concert-software-farmer, ros-indigo-concert-utilities, ros-indigo-rocon-tf-reconstructor
+Description: The concert framework modules.
