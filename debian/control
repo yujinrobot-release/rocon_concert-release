@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-software-farmer
+Section: misc
+Priority: extra
+Maintainer: Jihoon Lee <jihoonlee.in@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), python-catkin-pkg, ros-indigo-catkin
+Homepage: http://wiki.ros.org/concert_software_farmer
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-software-farmer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-rospkg, ros-indigo-concert-msgs, ros-indigo-genpy, ros-indigo-rocon-python-comms, ros-indigo-rocon-python-utils, ros-indigo-rocon-std-msgs, ros-indigo-rospy
+Description: Concert Software farm is to manage software being utilised across services
