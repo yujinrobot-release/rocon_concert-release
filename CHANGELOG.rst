@@ -2,6 +2,17 @@
 Changelog for package concert_service_manager
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.11 (2015-08-28)
+-------------------
+* add python catkin pkg as build depend
+* Contributors: Jihoon Lee
+
+0.6.10 (2015-08-28)
+-------------------
+* update overview
+* service manager document init
+* Contributors: Jihoon Lee
+
 0.6.9 (2015-07-09)
 ------------------
 * [concert_service_manager] bugfix concert when no services are provided, fixes `#304 <https://github.com/robotics-in-concert/rocon_concert/issues/304>`_.
