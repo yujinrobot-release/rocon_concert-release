@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-conductor
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin, ros-indigo-dynamic-reconfigure
+Homepage: http://ros.org/wiki/concert_conductor
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-conductor
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-concert-msgs, ros-indigo-dynamic-reconfigure, ros-indigo-gateway-msgs, ros-indigo-rocon-app-manager-msgs, ros-indigo-rocon-console, ros-indigo-rocon-gateway-utils, ros-indigo-rocon-python-comms, ros-indigo-rocon-uri, ros-indigo-rosgraph, ros-indigo-rospy, ros-indigo-rosservice, ros-indigo-std-msgs, ros-indigo-std-srvs
+Description: Managing the concert clients - invitations, monitoring connections...
