@@ -2,6 +2,12 @@
 Changelog for package rocon_tf_reconstructor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.11 (2015-08-28)
+-------------------
+
+0.6.10 (2015-08-28)
+-------------------
+
 0.6.9 (2015-07-09)
 ------------------
 * it should be key instead of name `#306 <https://github.com/robotics-in-concert/rocon_concert/issues/306>`_
