@@ -2,6 +2,12 @@
 Changelog
 =========
 
+0.6.11 (2015-08-28)
+-------------------
+
+0.6.10 (2015-08-28)
+-------------------
+
 0.6.9 (2015-07-09)
 ------------------
 * ros friendly name matching for releasing client closes `#307 <https://github.com/robotics-in-concert/rocon_concert/issues/307>`_

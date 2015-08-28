@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>concert_service_manager</name>
-  <version>0.6.9</version>
+  <version>0.6.11</version>
   <description>Component responsible for launching and managing concert services.</description>
 
   <maintainer email="d.stonier@gmail.com">Daniel Stonier</maintainer>
@@ -13,6 +13,7 @@
   <author>Jihoon Lee</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>python-catkin-pkg</build_depend>
 
   <run_depend>concert_msgs</run_depend>
   <run_depend>genpy</run_depend>
