@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-schedulers
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin
+Homepage: http://ros.org/wiki/concert_schedulers
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-schedulers
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-concert-msgs, ros-indigo-concert-scheduler-requests, ros-indigo-rocon-app-manager-msgs, ros-indigo-rocon-console, ros-indigo-rocon-python-utils, ros-indigo-rocon-uri, ros-indigo-rosgraph, ros-indigo-rospy, ros-indigo-scheduler-msgs, ros-indigo-unique-id, ros-indigo-uuid-msgs
+Description: Various schedulers for the concert
