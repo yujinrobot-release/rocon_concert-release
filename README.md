@@ -1,3 +1,36 @@
+## rocon_concert (indigo) - 0.6.11-1
+
+The packages in the `rocon_concert` repository were released into the `indigo` distro by running `/usr/bin/bloom-release --edit-track --track indigo --rosdistro indigo rocon_concert` on `Wed, 12 Oct 2016 00:58:09 -0000`
+
+These packages were released:
+- `concert_conductor`
+- `concert_master`
+- `concert_schedulers`
+- `concert_service_link_graph`
+- `concert_service_manager`
+- `concert_service_utilities`
+- `concert_software_farmer`
+- `concert_utilities`
+- `rocon_concert`
+- `rocon_tf_reconstructor`
+
+Version of package(s) in repository `rocon_concert`:
+
+- upstream repository: https://github.com/robotics-in-concert/rocon_concert
+- release repository: https://github.com/yujinrobot-release/rocon_concert-release.git
+- rosdistro version: `0.6.11-0`
+- old version: `0.6.11-0`
+- new version: `0.6.11-1`
+
+Versions of tools used:
+
+- bloom version: `0.5.22`
+- catkin_pkg version: `0.2.10`
+- rosdep version: `0.11.5`
+- rosdistro version: `0.4.7`
+- vcstools version: `0.1.38`
+
+
 ## rocon_concert (indigo) - 0.6.11-0
 
 The packages in the `rocon_concert` repository were released into the `indigo` distro by running `/usr/bin/bloom-release rocon_concert -t indigo -r indigo` on `Fri, 28 Aug 2015 01:29:46 -0000`
