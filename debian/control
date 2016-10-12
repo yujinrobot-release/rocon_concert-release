@@ -1,0 +1,12 @@
+Source: ros-indigo-concert-service-utilities
+Section: misc
+Priority: extra
+Maintainer: Daniel Stonier <d.stonier@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), python-catkin-pkg, ros-indigo-catkin, ros-indigo-rostest
+Homepage: http://ros.org/wiki/concert_service_utilities
+Standards-Version: 3.9.2
+
+Package: ros-indigo-concert-service-utilities
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-rocon-icons, ros-indigo-rocon-python-comms, ros-indigo-rospy, ros-indigo-rosunit
+Description: Utilities for services.
